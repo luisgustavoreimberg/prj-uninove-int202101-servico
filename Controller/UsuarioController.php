@@ -13,6 +13,11 @@
             return $usuarioModel->sql_atualizaUsuario($obj);
         }
 
+        function atualizaPontuacao($obj){
+            $usuarioModel = new UsuarioModel();
+            return $usuarioModel->sql_atualizaPontuacao($obj);
+        }
+
         function buscarUsuario($obj){
             $usuarioModel = new UsuarioModel();
             return $usuarioModel->sql_buscarUsuario($obj);

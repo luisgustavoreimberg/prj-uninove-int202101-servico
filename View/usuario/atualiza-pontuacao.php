@@ -9,11 +9,13 @@
         $dados = file_get_contents('php://input');
         $obj = json_decode($dados);
 
-        if(!empty($dados) && !empty($obj->id)){
+        if(!empty($dados) && 
+            isset($obj->id) && !empty($obj->id) &&
+            isset($obj->pontos) && !empty($obj->pontos) && is_numeric($obj->pontos)){
+
             $usuarioController = new UsuarioController();
-            
             if(count($usuarioController->buscarUsuarioPorId($obj))>0){
-                $usuarioController->atualizaUsuario($obj);
+                $usuarioController->atualizaPontuacao($obj);
                 $resposta = new RetornoServicoModel(true, false, 201, "", null);
             }else{
                 $resposta = new RetornoServicoModel(false, false, 200, "Usuário não encontrado!", null);

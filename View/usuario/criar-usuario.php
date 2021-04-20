@@ -9,7 +9,12 @@
         $dados = file_get_contents('php://input');
         $obj = json_decode($dados);
 
-        if(!empty($dados)){
+        if(!empty($dados) &&
+            isset($obj->nome) &&
+            isset($obj->apelido) &&
+            isset($obj->email) &&
+            isset($obj->senha)){
+
             $usuarioController = new UsuarioController();
             
             if(count($usuarioController->buscarUsuario($obj))>0){

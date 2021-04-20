@@ -5,7 +5,7 @@
     class UsuarioModel extends ConexaoBanco{
 
         public function sql_criaNovoUsuario($obj){
-            $sql = "INSERT INTO usuario(UsuarioNome, UsuarioSobreNome, UsuarioApelido, UsuarioEmail, UsuarioSenha) VALUES(:nome, :sobrenome, :apelido, :email, :senha)";
+            $sql = "INSERT INTO usuario(UsuarioNome, UsuarioSobreNome, UsuarioApelido, UsuarioEmail, UsuarioSenha, DataCriacao) VALUES(:nome, :sobrenome, :apelido, :email, :senha, NOW())";
             $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
             $consulta->bindValue('nome', $obj->nome);
             $consulta->bindValue('sobrenome', $obj->sobrenome);
@@ -23,6 +23,14 @@
             $consulta->bindValue('apelido', $obj->apelido);
             $consulta->bindValue('email', $obj->email);
             $consulta->bindValue('senha', $obj->senha);
+            $consulta->bindValue('id', $obj->id);
+            return $consulta->execute();
+        }
+
+        public function sql_atualizaPontuacao($obj){
+            $sql = "UPDATE usuario SET UsuarioPontuacao = :pontos WHERE UsuarioID = :id";
+            $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
+            $consulta->bindValue('pontos', $obj->pontos);
             $consulta->bindValue('id', $obj->id);
             return $consulta->execute();
         }
