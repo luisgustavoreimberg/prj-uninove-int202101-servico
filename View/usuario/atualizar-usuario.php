@@ -1,11 +1,14 @@
 <?php
 
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: *");
+
     include '../../Controller/UsuarioController.php';
     include '../../Model/RetornoServicoModel.php';
 
     $resposta;
 
-    if($_SERVER["REQUEST_METHOD"] == "PUT"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
         $dados = file_get_contents('php://input');
         $obj = json_decode($dados);
 

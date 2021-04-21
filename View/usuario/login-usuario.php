@@ -1,5 +1,8 @@
 <?php
 
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: *");
+
     include '../../Controller/UsuarioController.php';
     include '../../Model/RetornoServicoModel.php';
 
