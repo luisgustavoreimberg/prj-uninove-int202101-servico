@@ -19,7 +19,7 @@
             $usuarioController = new UsuarioController();
             if(count($usuarioController->buscarUsuarioPorId($obj))>0){
                 $usuarioController->atualizaPontuacao($obj);
-                $resposta = new RetornoServicoModel(true, false, 201, "", null);
+                $resposta = new RetornoServicoModel(true, false, 201, "Pontuação atualizada com sucesso!", null);
             }else{
                 $resposta = new RetornoServicoModel(false, false, 200, "Usuário não encontrado!", null);
             }

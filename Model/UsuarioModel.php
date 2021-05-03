@@ -16,12 +16,19 @@
         }
 
         public function sql_atualizaUsuario($obj){
-            $sql = "UPDATE usuario SET UsuarioNome = :nome, UsuarioSobreNome = :sobrenome, UsuarioApelido = :apelido, UsuarioEmail = :email, UsuarioSenha = :senha WHERE UsuarioID = :id";
+            $sql = "UPDATE usuario SET UsuarioNome = :nome, UsuarioSobreNome = :sobrenome, UsuarioApelido = :apelido, UsuarioEmail = :email WHERE UsuarioID = :id";
             $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
             $consulta->bindValue('nome', $obj->nome);
             $consulta->bindValue('sobrenome', $obj->sobrenome);
             $consulta->bindValue('apelido', $obj->apelido);
             $consulta->bindValue('email', $obj->email);
+            $consulta->bindValue('id', $obj->id);
+            return $consulta->execute();
+        }
+
+        public function sql_atualizaSenha($obj){
+            $sql = "UPDATE usuario SET UsuarioSenha = :senha WHERE UsuarioID = :id";
+            $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
             $consulta->bindValue('senha', $obj->senha);
             $consulta->bindValue('id', $obj->id);
             return $consulta->execute();

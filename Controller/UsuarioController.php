@@ -13,6 +13,11 @@
             return $usuarioModel->sql_atualizaUsuario($obj);
         }
 
+        function atualizaSenha($obj){
+            $usuarioModel = new UsuarioModel();
+            return $usuarioModel->sql_atualizaSenha($obj);
+        }
+
         function atualizaPontuacao($obj){
             $usuarioModel = new UsuarioModel();
             return $usuarioModel->sql_atualizaPontuacao($obj);

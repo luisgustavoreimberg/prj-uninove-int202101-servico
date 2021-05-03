@@ -25,7 +25,7 @@
             }else{
                 $usuarioController->criaNovoUsuario($obj);
                 if(count($usuarioController->buscarUsuario($obj))>0){
-                    $resposta = new RetornoServicoModel(true, false, 200, "", null);
+                    $resposta = new RetornoServicoModel(true, false, 200, "Usuário criado com sucesso!", null);
                 }else{
                     $resposta = new RetornoServicoModel(false, true, 500, "Não foi possível criar o usuário!", null);
                 }
