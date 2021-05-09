@@ -43,7 +43,7 @@
         }
 
         public function sql_buscarUsuario($obj){
-            $sql = "SELECT * FROM usuario WHERE (UsuarioApelido LIKE :apelido OR UsuarioEmail LIKE :email)";
+            $sql = "SELECT UsuarioID, UsuarioApelido, UsuarioEmail FROM usuario WHERE (UsuarioApelido LIKE :apelido OR UsuarioEmail LIKE :email)";
             $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
             $consulta->bindValue('apelido', $obj->apelido);
             $consulta->bindValue('email', $obj->email);
@@ -67,13 +67,30 @@
         }
 
         public function sql_loginUsuario($obj){
-            $sql = "SELECT * FROM usuario WHERE (UsuarioApelido LIKE :usuario OR UsuarioEmail LIKE :usuario) AND UsuarioSenha = :senha";
+            $sql = "SELECT * FROM usuario WHERE (UsuarioApelido LIKE :usuario OR UsuarioEmail LIKE :usuario) AND (UsuarioSenha = :senha OR (UsuarioSenhaAlternativa IS NOT NULL AND UsuarioSenhaAlternativa = :senha))";
             $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
             $consulta->bindValue('usuario', $obj->usuario);
             $consulta->bindValue('senha', $obj->senha);
             $consulta->execute();
-            return $consulta->fetch(PDO::FETCH_ASSOC);
+            $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+            if($usuario["UsuarioSenhaAlternativa"] && $usuario["UsuarioID"]){
+                $s = "UPDATE usuario SET UsuarioSenhaAlternativa = NULL WHERE UsuarioID = :id";
+                $c = ConexaoBanco::prepararInstanciaBanco($s);
+                $c->bindValue('id', $usuario["UsuarioID"]);
+                $c->execute();
+            }
+            return $usuario;
         }
+
+        public function sql_recuperarSenha($id, $senhaTemp){
+            $sql = "UPDATE usuario SET UsuarioSenhaAlternativa = :senha WHERE UsuarioID = :id";
+            $consulta = ConexaoBanco::prepararInstanciaBanco($sql);
+            $consulta->bindValue('senha',$senhaTemp);
+            $consulta->bindValue('id',$id);
+            return $consulta->execute();
+        }
+
+
     }
 
 ?>

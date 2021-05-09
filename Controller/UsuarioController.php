@@ -42,6 +42,11 @@
             $usuarioModel = new UsuarioModel();
             return $usuarioModel->sql_loginUsuario($obj);
         }
+
+        function recuperarSenha($id, $senhaTemp){
+            $usuarioModel = new UsuarioModel();
+            return $usuarioModel->sql_recuperarSenha($id, $senhaTemp);
+        }
     }
 
 ?>

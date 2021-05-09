@@ -14,13 +14,19 @@
 
         if(!empty($dados) && !empty($obj->id)){
             $usuarioController = new UsuarioController();
-            
-            if(count($usuarioController->buscarUsuarioPorId($obj))>0){
-                $usuarioController->atualizaUsuario($obj);
-                $resposta = new RetornoServicoModel(true, false, 201, "Dados atualizados com sucesso!", null);
+            $aux = $usuarioController->buscarUsuario($obj);
+
+            if(!$aux || (count($aux)==1 && $obj->id == $aux[0]->UsuarioID)){
+                if(count($usuarioController->buscarUsuarioPorId($obj))>0){
+                    $usuarioController->atualizaUsuario($obj);
+                    $resposta = new RetornoServicoModel(true, false, 201, "Dados atualizados com sucesso!", null);
+                }else{
+                    $resposta = new RetornoServicoModel(false, false, 200, "Usuário não encontrado!", null);
+                }
             }else{
-                $resposta = new RetornoServicoModel(false, false, 200, "Usuário não encontrado!", null);
+                $resposta = new RetornoServicoModel(false, false, 200, "Apelido e/ou e-mail já existente!", null);
             }
+
         }else{
             $resposta = new RetornoServicoModel(false, false, 200, "Sem dados para atualização!",null);
         }
